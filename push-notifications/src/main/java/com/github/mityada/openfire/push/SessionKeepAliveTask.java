@@ -6,8 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.jivesoftware.openfire.SessionManager;
+import org.jivesoftware.openfire.XMPPServer;
+import org.jivesoftware.openfire.handler.IQPingHandler;
 import org.jivesoftware.openfire.session.ClientSession;
 import org.jivesoftware.openfire.session.LocalClientSession;
+
+import org.xmpp.packet.IQ;
 
 public class SessionKeepAliveTask extends TimerTask {
 	private static final Logger LOG = LoggerFactory.getLogger(SessionKeepAliveTask.class);
@@ -35,8 +39,12 @@ public class SessionKeepAliveTask extends TimerTask {
                 continue;
 
             if (localClientSession.getLastActiveDate().getTime() < notifyTime) {
-                LOG.debug("Sending notification to " + localClientSession.getAddress());
-                manager.notify(localClientSession.getAddress(), null);
+                LOG.debug("Sending ping to " + localClientSession.getAddress());
+                IQ ping = new IQ(IQ.Type.get);
+                ping.setChildElement("ping", IQPingHandler.NAMESPACE);
+                ping.setFrom(XMPPServer.getInstance().getServerInfo().getXMPPDomain());
+                ping.setTo(localClientSession.getAddress());
+                localClientSession.process(ping);
             }
         }
     }
