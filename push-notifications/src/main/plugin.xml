@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <class>com.github.mityada.openfire.push.PushNotificationsPlugin</class>
+    <name>Push Notifications</name>
+    <description>XEP-0357 support</description>
+    <author>Dmitry Deshevoy</author>
+    <version>0.1.0</version>
+</plugin>

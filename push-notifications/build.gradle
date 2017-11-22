@@ -1,0 +1,29 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compileOnly 'org.igniterealtime:openfire:4.2.0-beta'
+}
+
+task pluginJar(type: Jar, dependsOn: build) {
+    archiveName = "push-notifications.jar"
+    destinationDir = file("build/plugin")
+
+    into('') {
+        from "${projectDir}/src/${sourceSets.main.name}/plugin.xml"
+    }
+
+    into('classes') {
+        from sourceSets.main.output.classesDir
+    }
+
+    into('lib') {
+        from configurations.runtime
+    }
+}

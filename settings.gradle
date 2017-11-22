@@ -1,0 +1,3 @@
+include 'push-notifications'
+
+rootProject.name = 'openfire-push-notifications'
