@@ -3,6 +3,8 @@ package com.github.mityada.openfire.push;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.dom4j.Element;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,10 +92,14 @@ public class PushNotificationsManager implements IQResultListener {
                 IQ iq = new IQ(IQ.Type.set);
                 iq.setTo(jidService.getKey());
                 iq.setFrom(jid.toBareJID());
-                iq.setChildElement("pubsub", "http://jabber.org/protocol/pubsub")
-                  .addElement("publish").addAttribute("node", node.getKey())
-                  .addElement("item")
-                  .addElement("notification", "urn:xmpp:push:0");
+                Element notification = iq.setChildElement("pubsub", "http://jabber.org/protocol/pubsub")
+                                         .addElement("publish").addAttribute("node", node.getKey())
+                                         .addElement("item")
+                                         .addElement("notification", "urn:xmpp:push:0");
+
+                if (summary != null) {
+                    notification.add(summary.getElement());
+                }
 
                 IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();
                 iqRouter.addIQResultListener(iq.getID(), this);

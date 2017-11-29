@@ -7,6 +7,8 @@ import org.jivesoftware.openfire.interceptor.PacketInterceptor;
 import org.jivesoftware.openfire.session.LocalClientSession;
 import org.jivesoftware.openfire.session.Session;
 
+import org.xmpp.forms.DataForm;
+import org.xmpp.forms.FormField;
 import org.xmpp.packet.Packet;
 
 public class PushNotificationsPacketInterceptor implements PacketInterceptor {
@@ -31,6 +33,17 @@ public class PushNotificationsPacketInterceptor implements PacketInterceptor {
             return;
 
         LOG.debug("Packet for detached client session: " + packet);
-        manager.notify(localClientSession.getAddress(), null);
+
+        DataForm summary = new DataForm(DataForm.Type.submit);
+
+        FormField formType = summary.addField();
+        formType.setVariable("FORM_TYPE");
+        formType.addValue("urn:xmpp:push:summary");
+
+        FormField stanza = summary.addField();
+        stanza.setVariable("stanza");
+        stanza.addValue(packet.toXML());
+
+        manager.notify(localClientSession.getAddress(), summary);
     }
 }
