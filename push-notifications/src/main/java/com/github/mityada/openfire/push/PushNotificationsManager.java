@@ -98,7 +98,7 @@ public class PushNotificationsManager implements IQResultListener {
                                          .addElement("notification", "urn:xmpp:push:0");
 
                 if (summary != null) {
-                    notification.add(summary.getElement());
+                    notification.add(summary.createCopy().getElement());
                 }
 
                 IQRouter iqRouter = XMPPServer.getInstance().getIQRouter();
