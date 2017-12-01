@@ -51,7 +51,7 @@ public class PushNotificationsManager implements IQResultListener {
 
         Map<String, DataForm> nodes = jidServices.get(pushJID);
         nodes.put(node, publishOptions);
-        LOG.debug("Enabled push notifications for jid " + jid + " service " + pushJID + " node " + node);
+        LOG.info("Enabled push notifications for jid " + jid + " service " + pushJID + " node " + node);
     }
 
     public boolean disable(JID jid, JID pushJID, String node) {
@@ -66,7 +66,7 @@ public class PushNotificationsManager implements IQResultListener {
 
         if (node == null) {
             jidServices.remove(pushJID);
-            LOG.debug("Disabled push notifications for jid " + jid + " service " + pushJID);
+            LOG.info("Disabled push notifications for jid " + jid + " service " + pushJID);
             return true;
         }
 
@@ -76,7 +76,7 @@ public class PushNotificationsManager implements IQResultListener {
         }
 
         nodes.remove(node);
-        LOG.debug("Disabled push notifications for jid " + jid + " service " + pushJID + " node " + node);
+        LOG.info("Disabled push notifications for jid " + jid + " service " + pushJID + " node " + node);
         return true;
     }
 

@@ -36,7 +36,7 @@ public class PushNotificationsPlugin implements Plugin {
 
         TaskEngine.getInstance().scheduleAtFixedRate(keepAliveTask, 30 * 1000, 30 * 1000);
 
-        LOG.debug("PushNotificationsPlugin initialized");
+        LOG.info("PushNotificationsPlugin initialized");
     }
 
     @Override
@@ -48,6 +48,6 @@ public class PushNotificationsPlugin implements Plugin {
 
         TaskEngine.getInstance().cancelScheduledTask(keepAliveTask);
 
-        LOG.debug("PushNotificationsPlugin destroyed");
+        LOG.info("PushNotificationsPlugin destroyed");
     }
 }
